@@ -18,4 +18,4 @@ original_columns=[u'close', u'date', u'high', u'low', u'open']
 new_columns = ['Close','Timestamp','High','Low','Open']
 df = df.loc[:,original_columns]
 df.columns = new_columns
-df.to_csv('E:/Movie/Python/python codes/CSE422/TryNumberOne/data/ethereum2015to2017.csv',index=None)
+df.to_csv('..\Datasets\ethereum2015to2017.csv',index=None)

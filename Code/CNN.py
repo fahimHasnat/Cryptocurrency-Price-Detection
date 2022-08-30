@@ -8,7 +8,7 @@ from keras.callbacks import CSVLogger, ModelCheckpoint
 import h5py
 import os
 import tensorflow as tf
-from keras.backend.tensorflow_backend import set_session
+from keras.backend import set_session
 
 
 # Make the program use only one GPU
@@ -16,14 +16,14 @@ os.environ['CUDA_DEVICE_ORDER'] = 'PCI_BUS_ID'
 os.environ['CUDA_VISIBLE_DEVICES'] = '1'
 os.environ['TF_CPP_MIN_LOG_LEVEL']='2'
 
-config = tf.ConfigProto()
+config = tf.compat.v1.ConfigProto()
 config.gpu_options.allow_growth = True
-set_session(tf.Session(config=config))
+set_session(tf.compat.v1.Session(config=config))
 
 
-with h5py.File(''.join(['bitcoin2015to2017_close.h5']), 'r') as hf:
-    datas = hf['inputs'].value
-    labels = hf['outputs'].value
+with h5py.File(''.join(['C:/Users/V2/PycharmProjects/Datasets/bitcoin2015to2017_close.h5']), 'r') as hf:
+    datas = hf['inputs'][()]
+    labels = hf['outputs'][()]
 '''
 with h5py.File(''.join(['ethereum2015to2017_close.h5']), 'r') as hf:
     datas = hf['inputs'].value

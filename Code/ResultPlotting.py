@@ -4,7 +4,7 @@ from keras.models import Model
 from keras.layers import Dropout, Flatten, Dense, Activation
 from keras.callbacks import CSVLogger
 import tensorflow as tf
-from scipy.ndimage import imread
+# from scipy.ndimage import imread
 import numpy as np
 import random
 from keras.layers import LSTM
@@ -12,7 +12,7 @@ from keras.layers import Conv1D, MaxPooling1D, LeakyReLU
 from keras import backend as K
 import keras
 from keras.callbacks import CSVLogger, ModelCheckpoint
-from keras.backend.tensorflow_backend import set_session
+from keras.backend import set_session
 from keras import optimizers
 import h5py
 from sklearn.preprocessing import MinMaxScaler
@@ -26,14 +26,14 @@ os.environ['CUDA_DEVICE_ORDER'] = 'PCI_BUS_ID'
 os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
-with h5py.File(''.join(['bitcoin2015to2017_close.h5']), 'r') as hf:
-    datas = hf['inputs'].value
-    labels = hf['outputs'].value
-    input_times = hf['input_times'].value
-    output_times = hf['output_times'].value
-    original_inputs = hf['original_inputs'].value
-    original_outputs = hf['original_outputs'].value
-    original_datas = hf['original_datas'].value
+with h5py.File(''.join(['C:/Users/V2/PycharmProjects/Datasets/bitcoin2015to2017_close.h5']), 'r') as hf:
+    datas = hf['inputs'][()]
+    labels = hf['outputs'][()]
+    input_times = hf['input_times'][()]
+    output_times = hf['output_times'][()]
+    original_inputs = hf['original_inputs'][()]
+    original_outputs = hf['original_outputs'][()]
+    original_datas = hf['original_datas'][()]
 
 scaler = MinMaxScaler()
 # split training validation
@@ -61,10 +61,7 @@ model.add(Conv1D(activation='relu', input_shape=(step_size, nb_features), stride
 model.add(Dropout(0.25))
 model.add(Conv1D(strides=4, filters=nb_features, kernel_size=16))
 
-
-
-
-model.load_weights('weights/bitcoin2015to2017_close_CNN_2_relu-50-0.00060.hdf5')
+model.load_weights('../weights/bitcoin2015to2017_close_CNN_2_relu-50-0.00060.hdf5')
 #model.load_weights('weights/bitcoin2015to2017_close_GRU_1_tanh_relu_-100-0.00050.hdf5')
 model.compile(loss='mse', optimizer='adam')
 predicted = model.predict(validation_datas)
